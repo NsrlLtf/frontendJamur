@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monitoring Jamur Tiram</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>  -->
+<!-- <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script> -->
+
+<!-- TAMBAHKAN baris ini sebagai gantinya: -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <h1>Monitoring Jamur Tiram</h1>
+      <div class="datetime" id="datetime"></div>
+    </div>
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggle" id="navbar-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <!-- Desktop Nav -->
+    <nav id="navbar" class="navbar-desktop">
+      <a href="#" class="active" data-page="home">Beranda</a>
+      <a href="#" data-page="suhu">Suhu</a>
+      <a href="#" data-page="kelembaban">Kelembaban</a>
+      <a href="#" data-page="pompa">Pompa</a>
+      <a href="#" data-page="riwayat">Riwayat</a>
+      <div class="indicator"></div>
+    </nav>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#" class="active" data-page="home">Beranda</a>
+      <a href="#" data-page="suhu">Suhu</a>
+      <a href="#" data-page="kelembaban">Kelembaban</a>
+      <a href="#" data-page="pompa">Pompa</a>
+      <a href="#" data-page="riwayat">Riwayat</a>
+    </div>
+  </header>
+  <!-- Main Content -->
+  <main id="content">
+    <!-- Beranda -->
+    <section id="home" class="page active">
+      <div class="grid">
+        <div class="card">
+          <h3>Suhu</h3>
+          <p id="current-suhu">23°C</p>
+        </div>
+        <div class="card">
+          <h3>Kelembaban Udara</h3>
+          <p id="current-udara">61%</p>
+        </div>
+        <div class="card">
+          <h3>Kelembaban Tanah</h3>
+          <p id="current-tanah">48%</p>
+        </div>
+      </div>
+      <div class="history-table">
+        <h3>Riwayat (24 Jam Terakhir)</h3>
+        <table id="history-table">
+          <thead>
+            <tr>
+              <th>Jam</th>
+              <th>Suhu</th>
+              <th>Udara</th>
+              <th>Tanah</th>
+              <th>Pompa</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+    <!-- Suhu -->
+    <section id="suhu" class="page">
+      <h2>Grafik Suhu</h2>
+      <canvas id="chartSuhu"></canvas>
+    </section>
+    <!-- Kelembaban -->
+    <section id="kelembaban" class="page">
+      <h2>Grafik Kelembaban</h2>
+      <canvas id="chartKelembaban"></canvas>
+    </section>
+
+    <!-- Pompa -->
+    <section id="pompa" class="page">
+      <div class="pump-control">
+        <div class="pump-card">
+          <h3>Pompa Jamur</h3>
+          <div class="pump-btn-wrapper">
+            <button class="pump-btn square" id="pump-jamur" data-state="off">OFF</button>
+            <button class="mode-btn" id="mode-jamur">auto</button>
+          </div>
+        </div>
+
+        <div class="pump-card">
+          <h3>Pompa Tanah</h3>
+          <div class="pump-btn-wrapper">
+            <button class="pump-btn square" id="pump-tanah" data-state="off">OFF</button>
+            <button class="mode-btn" id="mode-tanah">auto</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Riwayat -->
+    <section id="riwayat" class="page">
+      <div class="history-full">
+        <div class="header-row">
+          <h3>Riwayat Pompa (24 Jam)</h3>
+          <button id="download-csv">Download CSV</button>
+        </div>
+        <table id="full-history-table">
+          <thead>
+            <tr>
+              <th>Jam</th>
+              <th>Suhu</th>
+              <th>Udara</th>
+              <th>Tanah</th>
+              <th>Pompa</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+    
+  </main>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script src="mqtt.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
